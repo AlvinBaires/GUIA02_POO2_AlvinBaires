@@ -7,6 +7,8 @@ package com.sv.udb.controlador;
 
 import com.sv.udb.modelo.*;
 import com.sv.udb.recursos.Conexion;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,8 +16,53 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Blob;
+import java.util.UUID;
+import javax.swing.JOptionPane;
 
 public class PersCtrl {
+    
+    
+    public boolean guardar(Pers objeto, InputStream inputStream)
+    {
+        boolean resp=false;
+        Connection cn = new Conexion().getConn();
+        try
+        {
+            String Consulta="SELECT * FROM pers WHERE dui_pers = ? or nit_pers = ?";
+            PreparedStatement cmd = cn.prepareStatement(Consulta);
+            cmd.setString(1, objeto.getDui_pers());   
+            cmd.setString(2, objeto.getNit_pers());   
+            ResultSet rs = cmd.executeQuery();
+            if(rs.last())
+            {
+                return false;
+            }
+            else
+            {
+                Consulta = "INSERT INTO `pers` (`CODI_PERS`, `NOMB_PERS`, `APEL_PERS`, `FOTO_PERS`, `CODI_TIPO_PERS`, `GENE_PERS`, `FECH_NACI_PERS`, `DUI_PERS`, `NIT_PERS`, `TIPO_SANG_PERS`, `CODI_UBIC_GEOG`, `FECH_ALTA`, `FECH_BAJA`, `ESTA`) VALUES ((select (count(CODI_PERS)+1) from pers), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), null, ?)";
+                cmd = cn.prepareStatement(Consulta);
+                cmd.setString(1, objeto.getNomb_pers());
+                cmd.setString(2, objeto.getApel_pers());
+                cmd.setBinaryStream(3, inputStream, inputStream.available());;
+                cmd.setInt(4, objeto.getCodi_tipo_pers().getCodi_tipo_pers());
+                cmd.setString(5, objeto.getGene_pers());
+                cmd.setString(6, objeto.getFech_naci_pers());
+                cmd.setString(7, objeto.getDui_pers());
+                cmd.setString(8, objeto.getNit_pers());
+                cmd.setString(9, objeto.getTipo_sang_pers());
+                cmd.setInt(10, objeto.getCodi_ubic_geog().getCODI_UBIC_GEOG());
+                cmd.setInt(11, objeto.getEsta());
+                cmd.executeUpdate();
+                resp=true;
+            }
+            return true;
+        }
+        catch(Exception err)
+        {
+            System.out.println(err.getMessage());
+            return false;
+        }
+    }
     
     public List<Pers> consTodo()
     {

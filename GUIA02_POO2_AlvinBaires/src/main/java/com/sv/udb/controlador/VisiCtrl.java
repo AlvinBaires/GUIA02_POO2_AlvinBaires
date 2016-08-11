@@ -33,7 +33,7 @@ public class VisiCtrl {
             ResultSet rs = cmd.executeQuery();
             while(rs.next())
             {
-                resp.add(new Visi(rs.getInt(1), 
+                /*resp.add(new Visi(rs.getInt(1), 
                 new Usua(rs.getInt(16), new Pers(rs.getInt(17), null, null, null, null, null, null, null, null, null, null, null, null), rs.getString(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22), rs.getBlob(23)),
                 new Pers(rs.getInt(24), rs.getString(25), rs.getString(26), new TipoPers(rs.getInt(27), null, null, null, null), rs.getString(28), rs.getString(29), rs.getString(30), rs.getString(31), rs.getString(32), new UbicGeog(rs.getInt(33), rs.getString(11), rs.getInt(12), rs.getString(13), rs.getString(14), rs.getBlob(15)), rs.getString(34), rs.getString(35), rs.getBlob(36)), 
                 rs.getInt(2), 
@@ -49,6 +49,7 @@ public class VisiCtrl {
                 rs.getString(13), 
                 rs.getString(14), 
                 rs.getBlob(15)));
+                */
             }
         }
         catch(Exception ex)

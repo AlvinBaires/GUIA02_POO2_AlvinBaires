@@ -26,7 +26,7 @@ public class UsuaCtrl {
             ResultSet rs = cmd.executeQuery();
             while(rs.next())
             {
-                    resp.add(new Usua(rs.getInt(1), new Pers(rs.getInt(2), rs.getString(10), rs.getString(11), new TipoPers(rs.getInt(12), null, null, null, null), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17), new UbicGeog(rs.getInt(18), null, 0, null, null, null), rs.getString(19), rs.getString(20), rs.getBlob(21)), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getBlob(8)));
+                    resp.add(new Usua(rs.getInt(1), new Pers(rs.getInt(2), rs.getString(10), rs.getString(11), rs.getBlob(12), new TipoPers(rs.getInt(13), null, null, null, null), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), new UbicGeog(rs.getInt(19), null, 0, null, null, null), rs.getString(20), rs.getString(21), rs.getInt(22)), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getBlob(8)));
             }
         }
         catch(Exception ex)

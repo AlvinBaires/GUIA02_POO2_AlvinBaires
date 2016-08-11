@@ -21,12 +21,36 @@ public class PersHistCtrl {
         Connection cn = new Conexion().getConn();
         try
         {
-            String consulta = "select * from pers_hist inner join pers on pers.CODI_PERS = pers_hist.CODI_PERS inner join tipo_pers on tipo_pers.CODI_TIPO_PERS = pers_hist.CODI_TIPO_PERS inner join ubic_geog on ubic_geog.CODI_UBIC_GEOG = pers_hist.CODI_UBIC_GEOG";
+            String consulta = "select * from pers_hist, pers, tipo_pers, ubic_geog where pers.CODI_PERS = pers_hist.CODI_PERS and tipo_pers.CODI_TIPO_PERS = pers_hist.CODI_TIPO_PERS and ubic_geog.CODI_UBIC_GEOG = pers_hist.CODI_UBIC_GEOG and pers_hist.CODI_PERS_HIST=(select max(p.CODI_PERS_HIST) from pers_hist p where p.CODI_PERS = pers.CODI_PERS)";
             PreparedStatement cmd = cn.prepareStatement(consulta);
             ResultSet rs = cmd.executeQuery();
             while(rs.next())
             {
-                    resp.add(new PersHist(rs.getInt(1), new Pers(rs.getInt(11), rs.getString(12), rs.getString(13), rs.getInt(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), rs.getString(19), new UbicGeog(rs.getInt(29), rs.getString(30), rs.getInt(31), rs.getString(32), rs.getString(33), rs.getBlob(34)), rs.getString(21), rs.getString(22), rs.getBlob(23)), rs.getString(3), rs.getString(4), rs.getBlob(5), new TipoPers(rs.getInt(24), rs.getString(25), rs.getString(26), rs.getString(27), rs.getBlob(28)), new UbicGeog(rs.getInt(29), rs.getString(30), rs.getInt(31), rs.getString(32), rs.getString(33), rs.getBlob(34)), rs.getString(8), rs.getString(9), rs.getInt(10));
+                PersHist objePersHist = new PersHist();
+                Pers objePers = new Pers();
+                TipoPers objeTipoPers = new TipoPers();
+                UbicGeog objeUbicGeog = new UbicGeog();
+                
+                objePersHist.setCodi_pres_hist(rs.getInt("pers_hist.codi_pers_hist"));
+                objePers.setCodi_pers(rs.getInt("pers.codi_Pers"));
+                objePersHist.setNomb_pers(rs.getString("pers_hist.nomb_pers_hist"));
+                objePersHist.setApel_pers(rs.getString("pers_hist.apel_pers_hist"));
+                objePersHist.setFoto_pers(rs.getBlob("pers_hist.foto_pers"));
+                
+                objeTipoPers.setCodi_tipo_pers(rs.getInt("tipo_pers.codi_tipo_pers"));
+                objeTipoPers.setNomb_tipo_pers("tipo_pers.nomb_tipo_pers");
+                objePersHist.setCodi_tipo_pers(objeTipoPers);
+                
+                objeUbicGeog.setCODI_UBIC_GEOG(rs.getInt("ubic_geog.codi_ubic_geog"));
+                objeUbicGeog.setNOMB_UBIC_GEOG(rs.getString("ubic_geog.nomb_ubic_geog"));
+                objeUbicGeog.setCODI_UBIC_GEOG_SUPE(rs.getInt("ubic_geog.codi_ubic_geog_supe"));
+                objePersHist.setCodi_ubic_geog(objeUbicGeog);
+                
+                objePersHist.setFech_alta("pers_hist.fech_alta");
+                objePersHist.setFech_baja("pers_hist.fech_baja");
+                objePersHist.setEsta(rs.getInt("pers_hist.esta"));
+                
+                resp.add(objePersHist);
             }
         }
         catch(Exception ex)

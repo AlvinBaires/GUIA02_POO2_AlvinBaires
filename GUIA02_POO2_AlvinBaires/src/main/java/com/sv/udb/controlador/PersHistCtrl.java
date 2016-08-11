@@ -26,7 +26,7 @@ public class PersHistCtrl {
             ResultSet rs = cmd.executeQuery();
             while(rs.next())
             {
-                    resp.add(new PersHist(rs.getInt(1), new Pers(rs.getInt(10), rs.getString(11), rs.getString(12), null, rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), new UbicGeog(rs.getInt(28), rs.getString(29), rs.getInt(30), rs.getString(31), rs.getString(32), rs.getBlob(33)), rs.getString(20), rs.getString(21), rs.getBlob(22)), rs.getString(3), rs.getString(4), new TipoPers(rs.getInt(23), rs.getString(24), rs.getString(25), rs.getString(26), rs.getBlob(27)), new UbicGeog(rs.getInt(28), rs.getString(29), rs.getInt(30), rs.getString(31), rs.getString(32), rs.getBlob(33)), rs.getString(7), rs.getString(8), rs.getBlob(9)));
+                    resp.add(new PersHist(rs.getInt(1), new Pers(rs.getInt(11), rs.getString(12), rs.getString(13), rs.getInt(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), rs.getString(19), new UbicGeog(rs.getInt(29), rs.getString(30), rs.getInt(31), rs.getString(32), rs.getString(33), rs.getBlob(34)), rs.getString(21), rs.getString(22), rs.getBlob(23)), rs.getString(3), rs.getString(4), rs.getBlob(5), new TipoPers(rs.getInt(24), rs.getString(25), rs.getString(26), rs.getString(27), rs.getBlob(28)), new UbicGeog(rs.getInt(29), rs.getString(30), rs.getInt(31), rs.getString(32), rs.getString(33), rs.getBlob(34)), rs.getString(8), rs.getString(9), rs.getInt(10));
             }
         }
         catch(Exception ex)

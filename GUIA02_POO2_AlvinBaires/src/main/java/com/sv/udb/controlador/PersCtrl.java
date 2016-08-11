@@ -39,7 +39,7 @@ public class PersCtrl {
             }
             else
             {
-                Consulta = "INSERT INTO `pers` (`CODI_PERS`, `NOMB_PERS`, `APEL_PERS`, `FOTO_PERS`, `CODI_TIPO_PERS`, `GENE_PERS`, `FECH_NACI_PERS`, `DUI_PERS`, `NIT_PERS`, `TIPO_SANG_PERS`, `CODI_UBIC_GEOG`, `FECH_ALTA`, `FECH_BAJA`, `ESTA`) VALUES ((select (count(CODI_PERS)+1) from pers), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), null, ?)";
+                Consulta = "INSERT INTO `pers` (`CODI_PERS`, `NOMB_PERS`, `APEL_PERS`, `FOTO_PERS`, `CODI_TIPO_PERS`, `GENE_PERS`, `FECH_NACI_PERS`, `DUI_PERS`, `NIT_PERS`, `TIPO_SANG_PERS`, `CODI_UBIC_GEOG`, `FECH_ALTA`, `FECH_BAJA`, `ESTA`) VALUES ((select (count(CODI_PERS)+1) from pers ), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), null, ?)";
                 cmd = cn.prepareStatement(Consulta);
                 cmd.setString(1, objeto.getNomb_pers());
                 cmd.setString(2, objeto.getApel_pers());

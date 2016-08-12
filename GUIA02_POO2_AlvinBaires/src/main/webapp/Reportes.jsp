@@ -65,7 +65,7 @@
                   <div class="row mt">
                       <div class="col-lg-12">
                           <div class="form-panel">
-                              <h4><i class="fa fa-angle-right"></i>Reporte 1</h4>
+                              <h4><i class="fa fa-angle-right"></i>Reporte 1 Guia 1</h4>
                               Ver visitas de una unidad                              
                               <div class="form-group">
                                   <label class="col-sm-2 col-sm-2 control-label">Unidad Organizativa:</label>
@@ -89,7 +89,7 @@
                   <div class="row mt">
                       <div class="col-lg-12">
                           <div class="form-panel">
-                              <h4><i class="fa fa-angle-right"></i>Reporte 2</h4>
+                              <h4><i class="fa fa-angle-right"></i>Reporte 2 Guia 1</h4>
                               Ver lugar, fecha y hora de acceso y salida de una persona, así como la unidad organizativa que ha visitado.                            
                               <div class="form-group">
                                   <label class="col-sm-2 col-sm-2 control-label">Persona:</label>
@@ -114,7 +114,7 @@
                   <div class="row mt">
                       <div class="col-lg-12">
                           <div class="form-panel">
-                              <h4><i class="fa fa-angle-right"></i>Reporte 3</h4>
+                              <h4><i class="fa fa-angle-right"></i>Reporte 3 Guia 1</h4>
                               Ver las visitas de cada unidad organizativa han realizado en un rango de fechas                             
                               <div class="form-group">
                                   <label class="col-sm-2 col-sm-2 control-label">Fecha Inicial: (dd/mm/aaaa)</label>
@@ -140,7 +140,7 @@
                   <div class="row mt">
                       <div class="col-lg-12">
                           <div class="form-panel">
-                              <h4><i class="fa fa-angle-right"></i>Reporte con iText</h4>
+                              <h4><i class="fa fa-angle-right"></i>Reporte con iText Guia 1</h4>
                               Ver listado de usuarios</br>
                               <input type="submit" class="waves-effect waves-light btn"  value="Generar Reporte"/>
                           </div>     
@@ -153,7 +153,7 @@
                   <div class="row mt">
                       <div class="col-lg-12">
                           <div class="form-panel">
-                              <h4><i class="fa fa-angle-right"></i>Exportar reporte 1</h4>
+                              <h4><i class="fa fa-angle-right"></i>Exportar reporte 1 Guia 1</h4>
                               Ver visitas de una unidad                              
                               <div class="form-group">
                                   <label class="col-sm-2 col-sm-2 control-label">Unidad Organizativa:</label>
@@ -168,6 +168,29 @@
                               <input type="submit" class="waves-effect waves-light btn" name="Exportar" value="EXCEL"/>
                               <input type="submit" class="waves-effect waves-light btn" name="Exportar" value="PDF"/>
                               <input type="submit" class="waves-effect waves-light btn" name="Exportar" value="HTML"/>
+                          </div>     
+                      </div><!-- /col-md-12 -->
+                  </div><!-- row -->              
+          </form>
+                                          
+          <form action="FichaPersona.jsp" target="_blank" class="form-horizontal style-form" method="POST">
+                  <div class="row mt">
+                      <div class="col-lg-12">
+                          <div class="form-panel">
+                              <h4><i class="fa fa-angle-right"></i>Ficha Persona Guia 2</h4>
+                              Ver visitas de una unidad                              
+                              <div class="form-group">
+                                  <label class="col-sm-2 col-sm-2 control-label">Persona: </label>
+                                  <div class="col-sm-10">
+                                      <select class="form-control" id="cmbUnidOrga" name="cmbPersona">
+                                      <jsp:useBean id="beanPersHist" class="com.sv.udb.controlador.PersHistCtrl" scope="page"/>
+                                          <c:forEach items="${beanPersHist.consTodo()}" var="fila">
+                                                  <option data-rule-required="true"  value="${fila.codi_pers.codi_pers}">${fila.nomb_pers}</option>                                      
+                                          </c:forEach>
+                                      </select>
+                                  </div>
+                              </div>
+                              <input type="submit" class="waves-effect waves-light btn"  value="Generar Reporte"/>
                           </div>     
                       </div><!-- /col-md-12 -->
                   </div><!-- row -->              

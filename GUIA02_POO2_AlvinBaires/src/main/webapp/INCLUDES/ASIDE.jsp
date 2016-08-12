@@ -15,14 +15,17 @@
                           <span>Mantenimientos</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="TipoDocu.jsp">Tipo Documento</a></li>
+                          <li><a  href="TipoDocu.jsp">Tipo Documento (Solo Tabla)</a></li>
+                      </ul>
+                      <ul class="sub">
+                          <li><a  href="Personas.jsp">Personas (Guia 1)</a></li>
                       </ul>
                   </li>
                   
                   <li class="sub-menu">
                       <a href="Reportes.jsp">
                           <i class="fa fa-bar-chart-o"></i>
-                          <span>Reportes</span>
+                          <span>Reportes (Guía 1 y 2)</span>
                       </a>
                   </li>
                   

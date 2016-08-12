@@ -69,8 +69,8 @@
                           <div class="form-panel">
                                   <h4 class="mb" id="mensaje">${mensAler}</h4>
 
-                                  <input type="" name="codigoPersona" value="${codigoPersona}"/>
-                                  <input type="" name="codigoHistorial" value="${codigoHistorial}"/>
+                                  <input type="hidden" name="codigoPersona" value="${codigoPersona}"/>
+                                  <input type="hidden" name="codigoHistorial" value="${codigoHistorial}"/>
 
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label">Nombres</label>

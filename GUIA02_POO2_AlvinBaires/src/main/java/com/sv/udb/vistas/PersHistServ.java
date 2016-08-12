@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Blob;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -29,15 +32,14 @@ public class PersHistServ extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            System.out.println("Lamen");
+        try (PrintWriter out = response.getWriter()) {}
         boolean esValido = request.getMethod().equals("POST");
         if(esValido)
         {
             String mens = "";
-            System.out.println("Laca");
             String CRUD = request.getParameter("accion");
             System.out.println("boton " +CRUD);
+            request.setAttribute("bloquear", "");
             if(CRUD.equals("Guardar"))
             {
                 if(request.getParameter("cmbTipoPers").trim().equals("")||request.getParameter("cmbUbicGeog").trim().equals("") ||request.getParameter("nombrePersona").trim().equals("") || request.getParameter("nombrePersona").trim().equals("apellidoPersona"))
@@ -61,53 +63,109 @@ public class PersHistServ extends HttpServlet {
                         // prints out some information for debugging
                         if(filePart.getContentType().equals("image/jpg")||filePart.getContentType().equals("image/gif")||filePart.getContentType().equals("image/jpeg")||filePart.getContentType().equals("image/png"))
                         {
-                            System.out.println(filePart.getName());
-                            System.out.println(filePart.getSize());
-                            System.out.println(filePart.getContentType());
-                            // obtains input stream of the upload file
-                            inputStream = filePart.getInputStream();
-                            
-                            Pers objePers = new Pers();
-                            objePers.setNomb_pers(request.getParameter("nombrePersona"));
-                            objePers.setApel_pers(request.getParameter("apellidoPersona"));
-                            objePers.setCodi_tipo_pers(new TipoPers(Integer.parseInt(request.getParameter("cmbTipoPers")),null,null,null,null));
-                            objePers.setCodi_ubic_geog(new UbicGeog(Integer.parseInt(request.getParameter("cmbUbicGeog")),null,0,null,null,null));
-                            
-                            mens = new PersCtrl().guardar(objePers,inputStream)? "Datos Guardados" : "Datos no guardados";
-                            
-                            
-                            /*Cliente cli = new Cliente();
-                            Institucion ins = new Institucion();
-                            ins.setCodigoInstitucion(Integer.parseInt(request.getParameter("cmbInsti")));
-                            cli.setObjetoInstitucion(ins);
-                            cli.setNombreCliente(request.getParameter("nombreCliente"));
-                            cli.setTelefonoCliente(request.getParameter("telefonoCliente"));
-                            mens = new ClienteCtrl().guardar(cli) ? "Datos guardados" : "Datos no guardados";*/
+                            inputStream = filePart.getInputStream();      
+                            try
+                            {
+                                Pers objePers = new Pers();
+                                objePers.setNomb_pers(request.getParameter("nombrePersona"));
+                                objePers.setApel_pers(request.getParameter("apellidoPersona"));
+                                objePers.setCodi_tipo_pers(new TipoPers(Integer.parseInt(request.getParameter("cmbTipoPers")),null,null,null,null));
+                                objePers.setCodi_ubic_geog(new UbicGeog(Integer.parseInt(request.getParameter("cmbUbicGeog")),null,0,null,null,null));
+                                objePers.setEsta(1);
+                                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                                Date fecha = formatter.parse(request.getParameter("fechaNacimiento"));
+                                DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                                String convertido = formato.format(fecha)+" 00:00:001";
+                                
+                                objePers.setFech_naci_pers(convertido);
+                                objePers.setGene_pers(request.getParameter("cmbGeneroPersona"));
+                                objePers.setDui_pers(request.getParameter("duiPersona"));
+                                objePers.setNit_pers(request.getParameter("nitPersona"));
+                                objePers.setTipo_sang_pers(request.getParameter("tipoSangre"));
+                                mens = new PersCtrl().guardar(objePers,inputStream)? "Datos Guardados" : "Datos no guardados";
+                                
+                                PersHist objePersHist = new PersHist();
+                                objePersHist.setCodi_pers(objePers);
+                                objePersHist.setNomb_pers(request.getParameter("nombrePersona"));
+                                objePersHist.setApel_pers(request.getParameter("apellidoPersona"));
+                                objePersHist.setCodi_tipo_pers(new TipoPers(Integer.parseInt(request.getParameter("cmbTipoPers")),null,null,null,null));
+                                objePersHist.setCodi_ubic_geog(new UbicGeog(Integer.parseInt(request.getParameter("cmbUbicGeog")),null,0,null,null,null));
+                                objePersHist.setEsta(1);
+                                mens = new PersHistCtrl().guardar(objePersHist,inputStream)? "Datos Guardados" : "Datos no guardados";
+                                
+                            }
+                            catch(Exception err)
+                            {
+                                mens="Fecha mala!";
+                            }
                         }
                         else
                         {
-                            mens="Formato de imagen incorrecto";
+                            mens="Formato de imagen incorrecto debe seleccionar una imgen";
                         }                        
                     }
-                }
-                
-                
+                }                
             }
             else if(CRUD.equals("Modificar"))
             {
-                /*
-                Cliente cli = new Cliente();
-                Institucion ins = new Institucion();
-                cli.setCodigoCliente(Integer.parseInt(request.getParameter("codigoCliente")));
-                ins.setCodigoInstitucion(Integer.parseInt(request.getParameter("cmbInsti")));
-                cli.setObjetoInstitucion(ins);
-                cli.setNombreCliente(request.getParameter("nombreCliente"));
-                cli.setTelefonoCliente(request.getParameter("telefonoCliente"));
-                if(cli != null)
+                if(request.getParameter("cmbTipoPers").trim().equals("")||request.getParameter("cmbUbicGeog").trim().equals("") ||request.getParameter("nombrePersona").trim().equals("") || request.getParameter("nombrePersona").trim().equals("apellidoPersona"))
                 {
-                    mens = new ClienteCtrl().modificar(cli) ? "Datos modificados" : "Datos no modificados";
+                    mens="Campos vacíos";
                 }
-                */
+                else
+                {
+                    InputStream inputStream = null;
+                    Part filePart;
+                    try
+                    {
+                        filePart = request.getPart("fotoPersona");
+                    }
+                    catch(Exception err)
+                    {
+                        filePart=null;
+                        System.out.println("SIN FOTO");
+                    }
+                    if (filePart != null ) {
+                        // prints out some information for debugging
+                        if(filePart.getContentType().equals("image/jpg")||filePart.getContentType().equals("image/gif")||filePart.getContentType().equals("image/jpeg")||filePart.getContentType().equals("image/png"))
+                        {
+                            inputStream = filePart.getInputStream();      
+                            try
+                            {
+                                Pers objePers = new Pers();
+                                objePers.setCodi_pers(Integer.parseInt(request.getParameter("codigoPersona")));
+                                objePers.setNomb_pers(request.getParameter("nombrePersona"));
+                                objePers.setApel_pers(request.getParameter("apellidoPersona"));
+                                objePers.setCodi_tipo_pers(new TipoPers(Integer.parseInt(request.getParameter("cmbTipoPers")),null,null,null,null));
+                                objePers.setCodi_ubic_geog(new UbicGeog(Integer.parseInt(request.getParameter("cmbUbicGeog")),null,0,null,null,null));
+                                objePers.setEsta(1);
+                                        
+                                PersHist objePersHist = new PersHist();
+                                objePersHist.setCodi_pers(objePers);
+                                objePersHist.setCodi_pres_hist(Integer.parseInt(request.getParameter("codigoHistorial")));
+                                objePersHist.setNomb_pers(request.getParameter("nombrePersona"));
+                                objePersHist.setApel_pers(request.getParameter("apellidoPersona"));
+                                objePersHist.setCodi_tipo_pers(new TipoPers(Integer.parseInt(request.getParameter("cmbTipoPers")),null,null,null,null));
+                                objePersHist.setCodi_ubic_geog(new UbicGeog(Integer.parseInt(request.getParameter("cmbUbicGeog")),null,0,null,null,null));
+                                objePersHist.setEsta(1);
+                                mens = new PersHistCtrl().Modificar(objePersHist,inputStream)? "Datos Guardados" : "Datos no guardados";
+                                
+                            }
+                            catch(Exception err)
+                            {
+                                mens="Hubo algún error :(";
+                            }
+                        }
+                        else
+                        {
+                            mens="Formato de imagen incorrecto debe seleccionar una ";
+                        }                        
+                    }
+                    else
+                    {
+                        mens="Lastimosamente debe actualizar la foto c:";                        
+                    }
+                }
             }
             else if(CRUD.equals("Eliminar"))
             {
@@ -119,27 +177,48 @@ public class PersHistServ extends HttpServlet {
             }
             else if(CRUD.equals("Consultar"))
             {
-                /*
-                int codicli = Integer.parseInt(request.getParameter("codiCliRadi") == null ? "0" : request.getParameter("codiCliRadi"));
-                Cliente objecli = new ClienteCtrl().cons(codicli);
-                if(objecli != null)
+                int codigo = Integer.parseInt(request.getParameter("idRadi") == null ? "0" : request.getParameter("idRadi"));
+                PersHist objeto = new PersHistCtrl().consRegistro(codigo);
+                if(objeto != null)
                 {
-                    request.setAttribute("codigoCliente", codicli);
-                    request.setAttribute("cmbInsti", objecli.getObjetoInstitucion().getCodigoInstitucion());
-                    request.setAttribute("nombreCliente", objecli.getNombreCliente());
-                    request.setAttribute("telefonoCliente", objecli.getTelefonoCliente()); 
+                    request.setAttribute("codigoHistorial", objeto.getCodi_pres_hist());
+                    request.setAttribute("codigoPersona", objeto.getCodi_pers().getCodi_pers());
+                    request.setAttribute("nombrePersona", objeto.getNomb_pers());
+                    request.setAttribute("apellidoPersona", objeto.getApel_pers());
+                    request.setAttribute("cmbTipoPers", objeto.getCodi_tipo_pers().getCodi_tipo_pers());
+                    request.setAttribute("cmbUbicGeog", objeto.getCodi_ubic_geog().getCODI_UBIC_GEOG());
+                    request.setAttribute("generoPesona", objeto.getCodi_pers().getGene_pers());
+                    request.setAttribute("fechaNacimiento", objeto.getCodi_pers().getFech_naci_pers());
+                    request.setAttribute("duiPersona", objeto.getCodi_pers().getDui_pers());
+                    request.setAttribute("nitPersona", objeto.getCodi_pers().getNit_pers());
+                    request.setAttribute("tipoSangre", objeto.getCodi_pers().getTipo_sang_pers());
                 } 
-                */
+                request.setAttribute("bloquear", "readonly");
             }
-            request.setAttribute("mensAler", mens);
+            else if(CRUD.equals("Limpiar"))
+            {
+                request.setAttribute("codigoHistorial", "");
+                request.setAttribute("codigoPersona", "");
+                request.setAttribute("nombrePersona", "");
+                request.setAttribute("apellidoPersona", "");
+                request.setAttribute("cmbTipoPers", "");
+                request.setAttribute("cmbUbicGeog", "");
+                request.setAttribute("generoPesona", "");
+                request.setAttribute("fechaNacimiento", "");
+                request.setAttribute("duiPersona", "");
+                request.setAttribute("nitPersona", "");
+                request.setAttribute("tipoSangre", "");
+            }
+            request.setAttribute("mensAler", mens);            
             request.getRequestDispatcher("/Personas.jsp").forward(request, response);
         }
         else
         {
             response.sendRedirect(request.getContextPath() + "/Personas.jsp");
         }
+    
     }
- }
+ 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

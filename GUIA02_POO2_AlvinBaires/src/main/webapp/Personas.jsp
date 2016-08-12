@@ -13,6 +13,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <link rel="icon" href="assets/img/ui-sam.jpg"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Dashboard">
@@ -56,9 +57,8 @@
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
-      
-      <section id="main-content">
-          <form  name="PersonasForm" action="PersHistServ" class="form-horizontal style-form" enctype="multipart/form-data" method="POST">
+      <form  name="PersonasForm" action="PersHistServ" class="form-horizontal style-form" enctype="multipart/form-data" method="POST">
+      <section id="main-content">          
               <input type="hidden" name="accion" id="txtAccion"/>
               <section class="wrapper">
                   <h3><i class="fa fa-angle-right"></i> Personas</h3>
@@ -67,29 +67,29 @@
                   <div class="row mt">
                       <div class="col-lg-12">
                           <div class="form-panel">
-                              <div id="recargarForm">
                                   <h4 class="mb" id="mensaje">${mensAler}</h4>
 
-                                  <input type="hidden" id="codigoPersona" name="codigoCliente" value="${codigoPersona}"/>
+                                  <input type="" name="codigoPersona" value="${codigoPersona}"/>
+                                  <input type="" name="codigoHistorial" value="${codigoHistorial}"/>
 
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label">Nombres</label>
                                       <div class="col-sm-10">
-                                          <input id="nombrePersona" name="nombrePersona" value="${nombrePersona}"  type="text" class="form-control round-form">
+                                          <input id="nombrePersona" name="nombrePersona" value="${nombrePersona}"  type="text" class="form-control">
                                       </div>
                                   </div>
                                       
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label">Apellidos</label>
                                       <div class="col-sm-10">
-                                          <input id="apellidoPersona" name="apellidoPersona" value="${apellidoPersona}"  type="text" class="form-control round-form">
+                                          <input id="apellidoPersona" name="apellidoPersona" value="${apellidoPersona}"  type="text" class="form-control ">
                                       </div>
                                   </div>
                                       
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label">Foto</label>
                                       <div class="col-sm-10">
-                                          <input type="file" name="fotoPersona" class="form-control round-form"/>
+                                          <input type="file" name="fotoPersona" class="form-control "/>
                                       </div>
                                   </div>
 
@@ -130,49 +130,93 @@
                                           </select>
                                       </div>
                                   </div>
-                              </div>
+                                              
+                                 <div class="form-group">
+                                      <label class="col-sm-2 col-sm-2 control-label">Género</label>
+                                      <div class="col-sm-10">
+                                          <select class="form-control" id="cmbUbicGeog" name="cmbGeneroPersona" ${bloquear}>      
+                                              
+                                              <c:choose>                                                  
+                                                      <c:when test="${generoPesona eq 'F'}">
+                                                          <option  data-rule-required="true"selected name="generoPersona" value="F" selected="">Femenino</option>
+                                                          <option data-rule-required="true" name="generoPersona" value="M">Masculino</option>
+                                                      </c:when>
+                                                      <c:otherwise>
+                                                          <option data-rule-required="true" name="generoPersona" value="F" selected="">Femenino</option>
+                                                          <option data-rule-required="true"  selected name="generoPersona" value="M">Masculino</option>
+                                                      </c:otherwise>
+                                              </c:choose>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  
+                                  <div class="form-group">
+                                      <label class="col-sm-2 col-sm-2 control-label">Fecha Nadimiento (dd/mm/aaaa)</label>
+                                      <div class="col-sm-10">
+                                          <input ${bloquear} id="fechaNacimiento" name="fechaNacimiento" value="${fechaNacimiento}"  type="date" class="form-control ">
+                                      </div>
+                                  </div>
+                                      
+                                 <div class="form-group">
+                                      <label class="col-sm-2 col-sm-2 control-label">DUI</label>
+                                      <div class="col-sm-10">
+                                          <input ${bloquear} id="duiPersona" name="duiPersona" value="${duiPersona}"  type="text" class="form-control ">
+                                      </div>
+                                  </div>
+                                  
+                                  <div class="form-group">
+                                      <label class="col-sm-2 col-sm-2 control-label">NIT</label>
+                                      <div class="col-sm-10">
+                                          <input ${bloquear} id="nitPersona" name="nitPersona" value="${nitPersona}"  type="text" class="form-control">
+                                      </div>
+                                  </div>
+                                      
+                                  <div class="form-group">
+                                      <label class="col-sm-2 col-sm-2 control-label">Tipo Sangre</label>
+                                      <div class="col-sm-10">
+                                          <input ${bloquear} id="tipoSangre" name="tipoSangre" value="${tipoSangre}"  type="text" class="form-control">
+                                      </div>
+                                  </div>
+                                      
                               <div class="col s12 center-align">
                                   <input type="button" class="waves-effect waves-light btn" id="boton"  name="cursBton" value="Guardar"/>
                                   <input type="button" class="waves-effect waves-light btn" id="boton"  name="cursBton" value="Modificar"/>
-                                  <input type="button" class="waves-effect waves-light btn" id="boton"  name="cursBton" value="Eliminar" onclick="return confirm('¿Estas seguro que deseas eliminar este registro?');"/>
+                                  <input type="button" class="waves-effect waves-light btn" id="boton"  name="cursBton" value="Limpiar" />
                               </div>    
                           </div>
                       </div><!-- col-lg-12-->      	
                   </div><!-- /row -->
               </section>
-          </form>
-      </section>
-                                              
-
-                                              
-                
-      </section><!-- /MAIN CONTENT -->
-      
-      
-      <section id="main-content">
-          <form  name="PersonasForm" action="PersHistServ" class="form-horizontal style-form" method="POST">
-              <jsp:useBean id="beanPersHist" class="com.sv.udb.controlador.PersHistCtrl" scope="page"/>
+          <jsp:useBean id="beanPersHist" class="com.sv.udb.controlador.PersHistCtrl" scope="page"/>
               <section class="wrapper">
                   <div class="row">
 
-                      <div class="col-md-12">
+                      <div class="col-lg-12">
                           <div class="content-panel">
-                              <h4><i class="fa fa-angle-right"></i>Listado de clientes</h4>
+                              <h4><i class="fa fa-angle-right"></i>Listado de Personas</h4>
                               <hr>
                               <div id = "tblDatos">
                                   <section class="col-md-12">
-                                      
+                                      <% request.setAttribute("displayBod", new PersHistCtrl().consTodo());%>
+                                      <display:table id="tablBod" name="displayBod" class="table" pagesize="4">
+                                          <display:column property="nomb_pers" title="Nombre" sortable="true"/>  
+                                          <display:column property="apel_pers" title="Apellido" sortable="true"/>  
+                                          <display:column property="codi_tipo_pers.nomb_tipo_pers" title="Tipo" sortable="true"/>  
+                                          <display:column property="codi_ubic_geog.NOMB_UBIC_GEOG" title="Ubicación" sortable="true"/>
+                                          <display:column title="Selecione" sortable="true">
+                                              <input type="radio" name="idRadi" value="${tablBod.codi_pers.codi_pers}"/>
+                                          </display:column>
+                                      </display:table> 
                                   </section>
                               </div>                                  
                                       <input type="button" class="waves-effect waves-light btn"   name="cursBton" value="Consultar"/>
                               </div>
                           </div>
-                      </div><!-- /col-md-12 -->
-                  </div><!-- row -->
+                      </div>
               </section><! --/wrapper -->
-          </form>
+          
       </section><!-- /MAIN CONTENT -->
-
+      </form>
       <!--main content end-->
       <!--footer start-->
       <jsp:include page="INCLUDES/FOOTER.jsp" flush="true" />

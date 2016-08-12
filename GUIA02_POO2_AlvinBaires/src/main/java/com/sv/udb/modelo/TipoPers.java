@@ -64,5 +64,11 @@ public class TipoPers {
         this.fech_baja = fech_baja;
         this.esta = esta;
     }    
+
+    @Override
+    public String toString() {
+        return nomb_tipo_pers;
+    }
+    
     
 }

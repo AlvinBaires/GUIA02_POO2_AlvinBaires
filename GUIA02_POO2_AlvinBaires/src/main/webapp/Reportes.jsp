@@ -196,6 +196,28 @@
                   </div><!-- row -->              
           </form>
                                           
+          <form action="VerHistorial.jsp" target="_blank" class="form-horizontal style-form" method="POST">
+                  <div class="row mt">
+                      <div class="col-lg-12">
+                          <div class="form-panel">
+                              <h4><i class="fa fa-angle-right"></i>Historial Persona Guia 2</h4>
+                              Ver visitas de una unidad                              
+                              <div class="form-group">
+                                  <label class="col-sm-2 col-sm-2 control-label">Persona: </label>
+                                  <div class="col-sm-10">
+                                      <select class="form-control" id="cmbUnidOrga" name="cmbPersona">
+                                        <c:forEach items="${beanPersHist.consTodo()}" var="fila">
+                                                  <option data-rule-required="true"  value="${fila.codi_pers.codi_pers}">${fila.nomb_pers}</option>                                      
+                                          </c:forEach>
+                                      </select>
+                                  </div>
+                              </div>
+                              <input type="submit" class="waves-effect waves-light btn"  value="Generar Reporte"/>
+                          </div>     
+                      </div><!-- /col-md-12 -->
+                  </div><!-- row -->              
+          </form>
+                                          
           </section>
                                           
       </section>

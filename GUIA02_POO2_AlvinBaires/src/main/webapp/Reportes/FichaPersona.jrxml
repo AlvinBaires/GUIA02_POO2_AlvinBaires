@@ -178,7 +178,7 @@
 				<text><![CDATA[Tipo Persona:]]></text>
 			</staticText>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
-				<reportElement x="0" y="0" width="116" height="120" uuid="9ad80cdc-945a-4771-a77f-0d7cf3b03dd7"/>
+				<reportElement x="22" y="0" width="116" height="120" uuid="9ad80cdc-945a-4771-a77f-0d7cf3b03dd7"/>
 				<imageExpression><![CDATA[$F{FOTO_PERS}]]></imageExpression>
 			</image>
 			<textField>

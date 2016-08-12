@@ -32,7 +32,6 @@ public class PersHistServ extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {}
         boolean esValido = request.getMethod().equals("POST");
         if(esValido)
         {
@@ -166,14 +165,6 @@ public class PersHistServ extends HttpServlet {
                         mens="Lastimosamente debe actualizar la foto c:";                        
                     }
                 }
-            }
-            else if(CRUD.equals("Eliminar"))
-            {
-                /*
-                Cliente cli = new Cliente();
-                cli.setCodigoCliente(Integer.parseInt(request.getParameter("codigoCliente")));
-                mens = new ClienteCtrl().eliminar(cli) ? "Datos eliminados" : "Datos no eliminados";
-                */
             }
             else if(CRUD.equals("Consultar"))
             {

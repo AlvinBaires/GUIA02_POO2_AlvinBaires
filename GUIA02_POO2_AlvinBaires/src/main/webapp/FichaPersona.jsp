@@ -12,21 +12,7 @@
 <%@ page import="java.util.*" %> 
 <%@ page import="java.io.*" %> 
 <%
-    Date fecha;
-    try
-    {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaInicial = formatter.parse(request.getParameter("fechaInicial"));
-        Date fechaFinal = formatter.parse(request.getParameter("fechaFinal"));
-        if(fechaInicial.after(fechaFinal)            )
-        {
-            %>
-            La fecha Inicial no puede ser mayor a la Final
-            <%
-        }
-        else
-        {
-            Connection cn = new Conexion().getConn(); 
+        Connection cn = new Conexion().getConn(); 
             File reportFile = new File(application.getRealPath("Reportes/FichaPersona.jasper"));
             System.out.println(reportFile.getPath());
             Map parameters = new HashMap();
@@ -38,12 +24,4 @@
             outputStream.write(bytes,0,bytes.length);
             outputStream.flush();
             outputStream.close();
-        }
-    }
-    catch(Exception err)
-    {
-       %>
-            Fechas no Válidas
-            <%
-    }
 %>

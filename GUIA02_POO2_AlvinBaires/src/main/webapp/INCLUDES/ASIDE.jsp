@@ -18,7 +18,7 @@
                           <li><a  href="TipoDocu.jsp">Tipo Documento (Solo Tabla)</a></li>
                       </ul>
                       <ul class="sub">
-                          <li><a  href="Personas.jsp">Personas (Guia 1)</a></li>
+                          <li><a  href="Personas.jsp">Personas (Guia 2)</a></li>
                       </ul>
                   </li>
                   
